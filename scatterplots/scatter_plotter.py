@@ -131,12 +131,12 @@ def main():
         for file in os.listdir(netcdf_file_path)
     ]
 
-    # plot_var_depth_one_color(datasets, "temp")
-    # plot_var_depth_one_color(datasets, "psal")
+    plot_var_depth_one_color(datasets, "temp")
+    plot_var_depth_one_color(datasets, "psal")
     plot_var_raw_vs_good(datasets, "temp")
     plot_var_raw_vs_good(datasets, "psal")
-    # plot_var_depth_year(datasets, "temp")
-    # plot_var_depth_year(datasets, "psal")
+    plot_var_depth_year(datasets, "temp")
+    plot_var_depth_year(datasets, "psal")
     
 
 

@@ -216,8 +216,8 @@ def main():
     lat_list = merged_file["lat"].values
     datasets_str = merged_file["dataset_name"].values
     years = np.array([convert_to_int(year[:4]) for year in datestr])
-    # plot_points_by_data_source(lon_list, lat_list, datasets_str)
-    # plot_points_by_year(lon_list, lat_list, years)
+    plot_points_by_data_source(lon_list, lat_list, datasets_str)
+    plot_points_by_year(lon_list, lat_list, years)
 
     # plotting specific datasets
     meds_datasets = "/mnt/storage6/caio/AW_CAA/CTD_DATA/MEDS_2021/ncfiles_id/"

@@ -34,27 +34,26 @@ def plot_multiple_histograms(dataset_years_df: pd.DataFrame):
     num_cols = 3
     num_rows = math.ceil(num_datasets / num_cols)
 
-    fig, axs = plt.subplots(num_rows, num_cols, figsize=(15, 5*num_rows), sharey=True)
+    fig, axs = plt.subplots(num_rows, num_cols, figsize=(15, 5 * num_rows), sharey=True)
     axs = axs.ravel()
 
     for i, dataset in enumerate(datasets):
-        years = dataset_years_df['Year']
+        years = dataset_years_df["Year"]
         counts = dataset_years_df[dataset]
         ax = axs[i]
         ax.bar(years, counts, label=dataset)
         ax.legend()
-        ax.set_title(f'{dataset}')
+        ax.set_title(f"{dataset}")
 
     for j in range(num_datasets, num_rows * num_cols):
-        axs[j].axis('off')
+        axs[j].axis("off")
 
     plt.xlabel("Year")
     plt.ylabel("Profiles Count")
     plt.tight_layout()
     plt.savefig("imgs/multiple_histograms.png")
+    # plt.show()
     plt.clf()
-    plt.show()
-
 
 
 def plot_histogram_year(year_var_df: pd.DataFrame, profiles: int, var: str):
@@ -79,8 +78,8 @@ def plot_histogram_year(year_var_df: pd.DataFrame, profiles: int, var: str):
     plt.xlabel("Year")
     plt.ylabel("Profiles Count")
     plt.savefig(f"imgs/interannual_histogram_{var}.png")
-    plt.clf()
     # plt.show()
+    plt.clf()
 
 
 def plot_histogram_month(month_var_df: pd.DataFrame, profiles: int, var: str):
@@ -130,6 +129,15 @@ def dict_to_dataframe(column_list, row_list, row_type):
     df = pd.DataFrame(data_dict)
     df.insert(0, row_type, unique_items, allow_duplicates=True)
 
+    # df = organize_bigger_to_lower(df, row_type)
+
+    return df
+
+
+def organize_bigger_to_lower(df: pd.DataFrame, row_type):
+    columns_sum = df.drop(columns=[row_type]).sum()
+    sorted_columns = columns_sum.sort_values(ascending=False)
+    df = df[[row_type] + sorted_columns.index.tolist()]
     return df
 
 
@@ -145,8 +153,8 @@ def main():
     dataset_years_df = dict_to_dataframe(dataset_name_list, year_list, row_type="Year")
     dataset_months_df = dict_to_dataframe(dataset_name_list, month_list, row_type="Month")
 
-    # plot_histogram_year(dataset_years_df, number_profiles, "dataset")
-    # plot_histogram_month(dataset_months_df, number_profiles, "dataset")
+    plot_histogram_year(dataset_years_df, number_profiles, "dataset")
+    plot_histogram_month(dataset_months_df, number_profiles, "dataset")
     plot_multiple_histograms(dataset_years_df)
 
 
